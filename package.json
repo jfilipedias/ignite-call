@@ -11,6 +11,7 @@
   "dependencies": {
     "@hookform/resolvers": "^2.9.11",
     "@ignite-ui/react": "^2.2.4",
+    "@prisma/client": "^4.11.0",
     "next": "13.2.3",
     "phosphor-react": "^1.4.1",
     "react": "18.2.0",
@@ -29,6 +30,7 @@
     "eslint-config-prettier": "^8.7.0",
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.8.4",
+    "prisma": "^4.11.0",
     "typescript": "4.9.5"
   }
 }
