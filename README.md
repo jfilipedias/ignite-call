@@ -20,6 +20,12 @@ GOOGLE_CLIENT_ID=1234-exampleclientid.apps.googleusercontent.com
 GOOGLE_CLIENT_SECRET=EXAMPLE-Secret_Key1234
 ```
 
+Para realizar a autenticação com o [NextAuth.js](https://next-auth.js.org/), é necessário definir um `secret`. Esse valor poder ser gerado por meio do comando abaixo como sugerido pela [documentação](https://next-auth.js.org/configuration/options#secret):
+
+```shell
+openssl rand -base64 32
+```
+
 ## Tecnologias
 
 - [Axios](https://axios-http.com)
