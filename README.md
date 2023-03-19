@@ -17,7 +17,7 @@ Para implementar a funcionalidade de agendamento, foram utilizados os serviços 
 
 ```env
 GOOGLE_CLIENT_ID=1234-exampleclientid.apps.googleusercontent.com
-GOOGLE_CLIENT_SECRET_KEY=EXAMPLE-Secret_Key1234
+GOOGLE_CLIENT_SECRET=EXAMPLE-Secret_Key1234
 ```
 
 ## Tecnologias
