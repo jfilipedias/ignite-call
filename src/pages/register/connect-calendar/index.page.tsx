@@ -27,37 +27,37 @@ export default function ConnectCalendar() {
         </Text>
 
         <MultiStep size={4} currentStep={2} />
-
-        <ConnectBox>
-          <ConnectItem>
-            <Text>Google Calendar</Text>
-            {isSingedIn ? (
-              <Button size="sm" disabled>
-                Conectado <Check />
-              </Button>
-            ) : (
-              <Button
-                variant="secondary"
-                size="sm"
-                onClick={handleConnectCalendar}
-              >
-                Conectar <ArrowRight />
-              </Button>
-            )}
-          </ConnectItem>
-
-          {hasAuthError && (
-            <AuthError size="sm">
-              Falha ao se conectar com o Google. Verifique se você habilitou as
-              permissões de acesso ao Google Calendar.
-            </AuthError>
-          )}
-
-          <Button type="submit" disabled={!isSingedIn}>
-            Próximo passo <ArrowRight />
-          </Button>
-        </ConnectBox>
       </Header>
+
+      <ConnectBox>
+        <ConnectItem>
+          <Text>Google Calendar</Text>
+          {isSingedIn ? (
+            <Button size="sm" disabled>
+              Conectado <Check />
+            </Button>
+          ) : (
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={handleConnectCalendar}
+            >
+              Conectar <ArrowRight />
+            </Button>
+          )}
+        </ConnectItem>
+
+        {hasAuthError && (
+          <AuthError size="sm">
+            Falha ao se conectar com o Google. Verifique se você habilitou as
+            permissões de acesso ao Google Calendar.
+          </AuthError>
+        )}
+
+        <Button type="submit" disabled={!isSingedIn}>
+          Próximo passo <ArrowRight />
+        </Button>
+      </ConnectBox>
     </Container>
   )
 }
