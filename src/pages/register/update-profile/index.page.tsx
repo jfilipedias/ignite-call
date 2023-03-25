@@ -1,17 +1,33 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Button, Heading, MultiStep, Text, TextArea } from '@ignite-ui/react'
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+import {
+  Avatar,
+  Button,
+  Heading,
+  MultiStep,
+  Text,
+  TextArea,
+} from '@ignite-ui/react'
+import { GetServerSidePropsContext } from 'next'
+import { useRouter } from 'next/router'
 import { getServerSession } from 'next-auth'
 import { useSession } from 'next-auth/react'
 import { ArrowRight } from 'phosphor-react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
+import { api } from '@/lib/axios'
 import { buildNextAuthOptions } from '@/pages/api/auth/[...nextauth].api'
 import { Container, Header } from '../styles'
 import { FormAnnotation, ProfileBox } from './styles'
 
-export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
-  const session = getServerSession(req, res, buildNextAuthOptions(req, res))
+export const getServerSideProps = async ({
+  req,
+  res,
+}: GetServerSidePropsContext) => {
+  const session = await getServerSession(
+    req,
+    res,
+    buildNextAuthOptions(req, res),
+  )
 
   return {
     props: {
@@ -26,9 +42,7 @@ const updateProfileFormSchema = z.object({
 
 type UpdateProfileFormData = z.infer<typeof updateProfileFormSchema>
 
-export default function UpdateProfile({}: InferGetServerSidePropsType<
-  typeof getServerSideProps
->) {
+export default function UpdateProfile() {
   const {
     register,
     handleSubmit,
@@ -38,8 +52,15 @@ export default function UpdateProfile({}: InferGetServerSidePropsType<
   })
 
   const session = useSession()
+  const router = useRouter()
 
-  async function handleUpdateProfile(data: UpdateProfileFormData) {}
+  async function handleUpdateProfile(data: UpdateProfileFormData) {
+    await api.put('/users/profile', {
+      bio: data.bio,
+    })
+
+    await router.push(`/schedule/${session?.data?.user.username}`)
+  }
 
   return (
     <Container>
@@ -51,12 +72,16 @@ export default function UpdateProfile({}: InferGetServerSidePropsType<
           editar essas informações depois.
         </Text>
 
-        <MultiStep size={4} currentStep={1} />
+        <MultiStep size={4} currentStep={4} />
       </Header>
 
       <ProfileBox as="form" onSubmit={handleSubmit(handleUpdateProfile)}>
         <label>
           <Text>Foto de perfil</Text>
+          <Avatar
+            src={session.data?.user.avatar_url}
+            alt={session.data?.user.name}
+          />
         </label>
 
         <label>
