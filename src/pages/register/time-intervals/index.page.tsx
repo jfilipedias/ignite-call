@@ -10,7 +10,9 @@ import {
 import { ArrowRight } from 'phosphor-react'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import { z } from 'zod'
+import { api } from '@/lib/axios'
 import { getWeekDays } from '@/utils/get-week-days'
+import { convertTimeStringToMinutes } from '@/utils/convert-time-string-to-minutes'
 import { Container, Header } from '../styles'
 import {
   FormError,
@@ -20,8 +22,7 @@ import {
   IntervalInputs,
   IntervalItem,
 } from './styles'
-import { convertTimeStringToMinutes } from '../../../utils/convert-time-string-to-minutes'
-import { api } from '../../../lib/axios'
+import { useRouter } from 'next/router'
 
 const timeIntervalsFormSchema = z.object({
   intervals: z
@@ -92,10 +93,14 @@ export default function TimeInterval() {
 
   const intervals = watch('intervals')
 
+  const router = useRouter()
+
   async function handleSetTimeIntervals(data: unknown) {
     const { intervals } = data as TimeIntervalsFormOutput
 
     await api.post('/users/time-intervals', { intervals })
+
+    await router.push('/register/update-profile')
   }
 
   return (
