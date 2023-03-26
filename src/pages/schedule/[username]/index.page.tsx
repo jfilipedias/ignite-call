@@ -6,6 +6,7 @@ import {
 } from 'next'
 import { prisma } from '@/lib/prisma'
 import { Container, UserHeader } from './styles'
+import { ScheduleForm } from './ScheduleForm'
 
 const ONE_DAY_IN_SECONDS = 60 * 60 * 24
 
@@ -51,6 +52,8 @@ export default function UserSchedule({
         <Heading>{user.name}</Heading>
         <Text>{user.bio}</Text>
       </UserHeader>
+
+      <ScheduleForm />
     </Container>
   )
 }
