@@ -29,7 +29,6 @@ export const CalendarActions = styled('div', {
 
   button: {
     all: 'unset',
-    cursor: 'point',
     lineHeigh: 0,
     borderRadius: '$sm',
     cursor: 'pointer',
