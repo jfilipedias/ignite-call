@@ -27,6 +27,7 @@ export const IntervalDay = styled('div', {
   display: 'flex',
   alignItems: 'center',
   gap: '$3',
+  textTransform: 'capitalize',
 })
 
 export const IntervalInputs = styled('div', {

@@ -12,6 +12,6 @@ export function getWeekDays(options?: GetWeekDaysOptions) {
         return weekDay.substring(0, 3).toUpperCase()
       }
 
-      return weekDay.charAt(0).toUpperCase().concat(weekDay.substring(1))
+      return weekDay
     })
 }
