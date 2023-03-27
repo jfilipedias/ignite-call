@@ -15,6 +15,7 @@ export const CalendarHeader = styled('div', {
 
 export const CalendarTitle = styled(Text, {
   fontWeight: '$medium',
+  textTransform: 'capitalize',
 
   span: {
     color: '$gray200',
@@ -31,6 +32,7 @@ export const CalendarActions = styled('div', {
     cursor: 'point',
     lineHeigh: 0,
     borderRadius: '$sm',
+    cursor: 'pointer',
 
     svg: {
       width: '$5',
