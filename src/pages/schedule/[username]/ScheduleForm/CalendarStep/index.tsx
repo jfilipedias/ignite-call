@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Calendar } from '@/components/Calendar'
 import {
   Container,
@@ -8,9 +8,14 @@ import {
   TimePickerList,
 } from './styles'
 import dayjs from 'dayjs'
+import { api } from '../../../../../lib/axios'
 
 export function CalendarStep() {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null)
+  const [availability, setAvailability] = useState(null)
+
+  const router = useRouter()
+  const username = String(router.query.username)
 
   const isDateSelected = !!selectedDate
 
@@ -21,6 +26,20 @@ export function CalendarStep() {
   const selectedDay = selectedDate
     ? dayjs(selectedDate).format('DD[ de ]MMMM')
     : null
+
+  useEffect(() => {
+    if (!selectedDate) {
+      return
+    }
+
+    api
+      .get(`/user/${username}/availability`, {
+        params: {
+          date: dayjs(selectedDate).format('YYYY-MM-DD'),
+        },
+      })
+      .then(response => response.data)
+  }, [selectedDate, username])
 
   return (
     <Container isTimePickerOpen={isDateSelected}>
