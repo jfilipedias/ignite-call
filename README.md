@@ -5,12 +5,28 @@
 
 ## Getting started
 
+Para executar a aplicação em localhost é necessário que exista uma instância do [MySQL](https://mysql.com/) em execução. Para isso é possível utilizar [Docker](https://docker.com/) configurando um container com o seguinte comando: 
+
+```shell
+docker run --name ignite-call-mysql -e MYSQL_ROOT_PASSWORD=yourRootPassword! -p 3306:3306 mysql:latest
+```
+
+Caso seja optado por utilizar o docker é necessário que o container esteja em execução. Você pode iniciar a execução do container por meio do comando: 
+
+```shell
+docker start ignite-call-mysql
+```
+
 Para executar o projeto, é necessário configurar corretamente as variáveis de ambiente como exemplificado nesse [arquivo](./.env.example). Abaixo são descritos o uso de cada variável.
 
-O projeto utiliza o ORM [Prisma](https://prisma.io/) e para isso é necessário estabelecer o endereço do banco de dados:
+O projeto utiliza o ORM [Prisma](https://prisma.io/) e para isso é necessário estabelecer a conexão com o banco e executar as migrations:
 
 ```env
-DATABASE_URL="file:./dev.db"
+DATABASE_URL="mysql://user:password@localhost:3306/ignitecall"
+```
+
+```shell
+npx prisma migrate dev
 ```
 
 Para implementar a funcionalidade de agendamento, foram utilizados os serviços da [Google Cloud](https://cloud.google.com/). Para isso é necessário a configuração de um projeto com o serviço `Google Calendar API` ativo, permissão OAuth configurada, e credenciais de ID do cliente para Aplicativo da Web. As credenciais criadas serão um `ID do cliente` e uma `Chave secreta do cliente` que devem ser utilizadas nas seguintes variáveis de ambiente:
@@ -29,6 +45,7 @@ openssl rand -base64 32
 ## Tecnologias
 
 - [Axios](https://axios-http.com)
+- [Day.js](https://day.js.org/)
 - [ESLint](https://eslint.org/)
 - [Next.js](https://nextjs.org/)
 - [NextAuth.js](https://next-auth.js.org/)
@@ -37,6 +54,7 @@ openssl rand -base64 32
 - [React Hook Form](https://react-hook-form.com/)
 - [ReactJS](https://reactjs.org/)
 - [Stitches](https://stitches.dev/)
+- [TanStack Query](https://tanstack.com/query)
 - [Typescript](https://typescriptlang.org/)
 - [Zod](https://zod.dev/)
 
