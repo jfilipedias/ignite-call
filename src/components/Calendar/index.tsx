@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react'
+import { useRouter } from 'next/router'
 import dayjs from 'dayjs'
 import { CaretLeft, CaretRight } from 'phosphor-react'
+import { useQuery } from '@tanstack/react-query'
 import { getWeekDays } from '@/utils/get-week-days'
 import {
   CalendarActions,
@@ -10,6 +12,7 @@ import {
   CalendarHeader,
   CalendarTitle,
 } from './styles'
+import { api } from '../../lib/axios'
 
 interface CalendarWeek {
   week: number
@@ -21,6 +24,10 @@ interface CalendarWeek {
 
 type CalendarWeeks = CalendarWeek[]
 
+interface BlockedWeekDays {
+  blockedWeekDays: number[]
+}
+
 interface CalendarProps {
   selectedDate: Date | null
   onDateSelected: (date: Date) => void
@@ -31,8 +38,26 @@ export function Calendar({ selectedDate, onDateSelected }: CalendarProps) {
     return dayjs().set('date', 1)
   })
 
-  const currentMonth = currentDate.format('MMMM')
-  const currentYear = currentDate.format('YYYY')
+  const router = useRouter()
+  const username = String(router.query.username)
+
+  const currentFullMonth = currentDate.format('MMMM')
+  const currentMonth = currentDate.get('month')
+  const currentYear = currentDate.get('year')
+
+  const { data } = useQuery<BlockedWeekDays>(
+    ['users', username, 'blocked-date', selectedDate],
+    async () => {
+      const response = await api.get(`/users/${username}/blocked-week-days`, {
+        params: {
+          year: currentYear,
+          month: currentMonth,
+        },
+      })
+
+      return response.data
+    },
+  )
 
   const calendarWeeks = useMemo(() => {
     const currentMonthDaysArray = Array.from({
@@ -64,7 +89,9 @@ export function Calendar({ selectedDate, onDateSelected }: CalendarProps) {
       })),
       ...currentMonthDaysArray.map((date) => ({
         date,
-        disabled: date.endOf('day').isBefore(new Date()),
+        disabled:
+          date.endOf('day').isBefore(new Date()) ||
+          !!data?.blockedWeekDays.includes(date.get('day')),
       })),
       ...nextMonthDaysFillArray.map((date) => ({
         date,
@@ -89,7 +116,7 @@ export function Calendar({ selectedDate, onDateSelected }: CalendarProps) {
     )
 
     return calendarWeeks
-  }, [currentDate])
+  }, [currentDate, data])
 
   const shortWeekDays = getWeekDays({ short: true })
 
@@ -107,7 +134,7 @@ export function Calendar({ selectedDate, onDateSelected }: CalendarProps) {
     <CalendarContainer>
       <CalendarHeader>
         <CalendarTitle>
-          {currentMonth} <span>{currentYear}</span>
+          {currentFullMonth} <span>{currentYear}</span>
         </CalendarTitle>
 
         <CalendarActions>
