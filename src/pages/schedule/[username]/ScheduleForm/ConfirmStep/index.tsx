@@ -24,10 +24,10 @@ export function ConfirmStep() {
     resolver: zodResolver(confirmFormSchema),
   })
 
-  async function handleConfirmScheduling(data: ConfirmFormData) {}
+  async function handleConfirmSchedule(data: ConfirmFormData) {}
 
   return (
-    <ConfirmForm as="form" onSubmit={handleSubmit(handleConfirmScheduling)}>
+    <ConfirmForm as="form" onSubmit={handleSubmit(handleConfirmSchedule)}>
       <FormHeader>
         <Text>
           <CalendarBlank />

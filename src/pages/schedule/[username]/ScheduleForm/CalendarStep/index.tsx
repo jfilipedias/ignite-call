@@ -37,7 +37,7 @@ export function CalendarStep() {
     ? dayjs(selectedDate).format('YYYY-MM-DD')
     : null
 
-  const { data } = useQuery<Availability>(
+  const { data: availability } = useQuery<Availability>(
     ['users', username, 'availability', selectedDateWithoutTime],
     async () => {
       const response = await api.get(`/users/${username}/availability`, {
@@ -65,10 +65,10 @@ export function CalendarStep() {
           </TimePickerHeader>
 
           <TimePickerList>
-            {data?.possibleTimes.map((hour) => (
+            {availability?.possibleTimes.map((hour) => (
               <TimePickerItem
                 key={hour}
-                disabled={!data.availableTimes.includes(hour)}
+                disabled={!availability.availableTimes.includes(hour)}
               >
                 {String(hour).padStart(2, '0')}:00
               </TimePickerItem>

@@ -52,7 +52,7 @@ export default async function handler(
     length: endHour - startHour,
   }).map((_, i) => startHour + i)
 
-  const blockedTimes = await prisma.scheduling.findMany({
+  const blockedTimes = await prisma.schedule.findMany({
     select: {
       date: true,
     },
