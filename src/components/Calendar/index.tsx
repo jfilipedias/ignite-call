@@ -43,11 +43,11 @@ export function Calendar({ selectedDate, onDateSelected }: CalendarProps) {
   const username = String(router.query.username)
 
   const currentFullMonth = currentDate.format('MMMM')
-  const currentMonth = currentDate.get('month') + 1
-  const currentYear = currentDate.get('year')
+  const currentMonth = currentDate.format('MM')
+  const currentYear = currentDate.format('YYYY')
 
   const { data: blockedDates } = useQuery<BlockedDates>(
-    ['users', username, 'blocked-dates', selectedDate],
+    ['users', username, 'blocked-dates', currentYear, currentMonth],
     async () => {
       const response = await api.get(`/users/${username}/blocked-dates`, {
         params: {

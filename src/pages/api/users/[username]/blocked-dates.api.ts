@@ -47,7 +47,7 @@ export default async function handler(
     SELECT 
       EXTRACT(DAY FROM S.date) AS date,
       COUNT(S.date) AS schedules_amount,
-      ((UTI.time_end_in_minutes - UTI.time_start_in_minutes) / 60) AS possible_times
+      ((UTI.end_time_in_minutes - UTI.start_time_in_minutes) / 60) AS possible_times
     
     FROM schedules AS S
     
@@ -55,10 +55,10 @@ export default async function handler(
         ON UTI.week_day = WEEKDAY((DATE_ADD(S.date, INTERVAL 1 DAY)))
     
     WHERE S.user_id = ${user.id} 
-      AND Year = DATE_FORMAT(S.date, '%Y-%m') = ${`${year}-${month}`}
+      AND DATE_FORMAT(S.date, '%Y-%m') = ${`${year}-${month}`}
     
     GROUP BY EXTRACT(DAY FROM S.date),
-      ((UTI.time_end_in_minutes - UTI.time_start_in_minutes) / 60)
+      ((UTI.end_time_in_minutes - UTI.start_time_in_minutes) / 60)
     
     HAVING schedules_amount >= possible_times 
   `
