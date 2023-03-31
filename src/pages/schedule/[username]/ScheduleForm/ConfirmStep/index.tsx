@@ -1,9 +1,11 @@
+import { useRouter } from 'next/router'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, Text, TextArea, TextInput } from '@ignite-ui/react'
 import dayjs from 'dayjs'
 import { CalendarBlank, Clock } from 'phosphor-react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
+import { api } from '@/lib/axios'
 import { ConfirmForm, FormActions, FormError, FormHeader } from './styles'
 
 const confirmFormSchema = z.object({
@@ -18,10 +20,13 @@ type ConfirmFormData = z.infer<typeof confirmFormSchema>
 
 interface ConfirmStepProps {
   scheduleDateTime: Date
-  onCancel: () => void
+  onResetScheduleDateTime: () => void
 }
 
-export function ConfirmStep({ scheduleDateTime, onCancel }: ConfirmStepProps) {
+export function ConfirmStep({
+  scheduleDateTime,
+  onResetScheduleDateTime,
+}: ConfirmStepProps) {
   const {
     register,
     handleSubmit,
@@ -30,10 +35,23 @@ export function ConfirmStep({ scheduleDateTime, onCancel }: ConfirmStepProps) {
     resolver: zodResolver(confirmFormSchema),
   })
 
+  const router = useRouter()
+  const username = String(router.query.username)
+
   const formattedDate = dayjs(scheduleDateTime).format('DD[ de ]MMMM[ de ]YYYY')
   const formattedHour = dayjs(scheduleDateTime).format('HH:mm')
 
-  async function handleConfirmSchedule(data: ConfirmFormData) {}
+  async function handleConfirmSchedule(data: ConfirmFormData) {
+    const { name, email, notes } = data
+    await api.post(`/users/${username}/schedule`, {
+      name,
+      email,
+      notes,
+      date: scheduleDateTime,
+    })
+
+    onResetScheduleDateTime()
+  }
 
   return (
     <ConfirmForm as="form" onSubmit={handleSubmit(handleConfirmSchedule)}>
@@ -70,7 +88,11 @@ export function ConfirmStep({ scheduleDateTime, onCancel }: ConfirmStepProps) {
       </label>
 
       <FormActions>
-        <Button type="button" variant="tertiary" onClick={onCancel}>
+        <Button
+          type="button"
+          variant="tertiary"
+          onClick={onResetScheduleDateTime}
+        >
           Cancelar
         </Button>
         <Button type="submit" disabled={isSubmitting}>
