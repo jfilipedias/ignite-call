@@ -4,6 +4,7 @@ import {
   GetStaticPropsContext,
   InferGetStaticPropsType,
 } from 'next'
+import { NextSeo } from 'next-seo'
 import { prisma } from '@/lib/prisma'
 import { Container, UserHeader } from './styles'
 import { ScheduleForm } from './ScheduleForm'
@@ -46,14 +47,18 @@ export default function UserSchedule({
   user,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
-    <Container>
-      <UserHeader>
-        <Avatar src={user.avatarUrl} />
-        <Heading>{user.name}</Heading>
-        <Text>{user.bio}</Text>
-      </UserHeader>
+    <>
+      <NextSeo title={`Agendar com ${user.name}`} />
 
-      <ScheduleForm />
-    </Container>
+      <Container>
+        <UserHeader>
+          <Avatar src={user.avatarUrl} />
+          <Heading>{user.name}</Heading>
+          <Text>{user.bio}</Text>
+        </UserHeader>
+
+        <ScheduleForm />
+      </Container>
+    </>
   )
 }
