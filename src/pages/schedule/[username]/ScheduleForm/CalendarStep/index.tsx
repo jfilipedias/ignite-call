@@ -57,7 +57,7 @@ export function CalendarStep({ onSelectDateTime }: CalendarStepProps) {
     },
   )
 
-  const unavailableTimes = availability?.unavailableDateTimes.map((dateTime) =>
+  const unavailableTimes = availability?.unavailableDateTimes?.map((dateTime) =>
     dayjs(dateTime).get('hour'),
   )
 
