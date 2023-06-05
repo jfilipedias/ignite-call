@@ -5,12 +5,8 @@
 
 O Ignite Call é uma plataforma para agendamento de chamadas desenvolvida durante o programa Ignite da Rocketseat. Os usuários podem conectar seu [Google Calendar](https://calendar.google.com/ "Site do Google Calendar") por meio da sua Google Account, utilizando o protocolo para autorização [OAuth](https://oauth.net/ "Site do OAuth"), para que outras pessoas possam marcar agendamentos nos horários disponíveis. 
 
-![Tela cadastro do usuário para disponibilizar dias e horários](/images/projects/ignite-call-register.png)
-
 Durante o cadastro na plataforma, o usuário pode definir os dias da semana e horários que deseja disponibilizar para os agendamentos. Dessa forma, após a criação da conta, o usuário pode compartilhar a sua URL com outras pessoas para que elas consigam consultar as disponibilidades de datas e horários, e então realizar um agendamento no Google Calendar do usuário.
 
-
-![Tela de agendamento](/images/projects/ignite-call-scheduling.png)
 
 A aplicação foi desenvolvida em [ReactJS](https://reactjs.org/ "Site do React") utilizando o framework [Next.js](https://nextjs.org/ "Site do Next.js"), uma vez que se trata de uma aplicação fullstack, ou seja, com a a presença de um backend. Para a camada de persistência, foi utilizado o ORM [Prisma](https://prisma.io/ "Site do Prisma") para se comunicar com o serviço de banco de dados [MySQL](https://mysql.com/ "Site do MySQL") do serviço [PlanetScale](https://planetscale.com/ "Site do PlanetScale").
 
