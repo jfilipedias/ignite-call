@@ -10,6 +10,8 @@ Durante o cadastro na plataforma, o usuário pode definir os dias da semana e ho
 
 A aplicação foi desenvolvida em [ReactJS](https://reactjs.org/ "Site do React") utilizando o framework [Next.js](https://nextjs.org/ "Site do Next.js"), uma vez que se trata de uma aplicação fullstack, ou seja, com a a presença de um backend. Para a camada de persistência, foi utilizado o ORM [Prisma](https://prisma.io/ "Site do Prisma") para se comunicar com o serviço de banco de dados [MySQL](https://mysql.com/ "Site do MySQL") do serviço [PlanetScale](https://planetscale.com/ "Site do PlanetScale").
 
+![Interface da aplicação Ignite Call](./docs/cover.png)
+
 ## Getting started
 
 Para executar a aplicação em localhost é necessário que exista uma instância do [MySQL](https://mysql.com/) em execução. Para isso é possível utilizar [Docker](https://docker.com/) configurando um container com o seguinte comando: 
